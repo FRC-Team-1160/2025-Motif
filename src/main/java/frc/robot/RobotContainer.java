@@ -13,8 +13,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Commands.AlgaeAlignmentPID;
-import frc.robot.Subsystems.Vision.ObjectDetection;
+import frc.robot.Subsystems.DriveTrain.DriveTrain;
+import frc.robot.Subsystems.DriveTrain.DriveTrainRealIO;
+import frc.robot.Subsystems.DriveTrain.DriveTrainSimIO;
+
 
 public class RobotContainer {
   private Joystick main_stick = new Joystick(Constants.IO.MAIN_PORT);
@@ -22,12 +24,7 @@ public class RobotContainer {
   // private Joystick left_board = new Joystick(Constants.IO.LEFT_BOARD_PORT);
   private Joystick right_board = new Joystick(Constants.IO.RIGHT_BOARD_PORT);
 
-  public final SubsystemManager m_subsystem_manager = new SubsystemManager(
-    () -> main_stick.getRawAxis(0),
-    () -> main_stick.getRawAxis(1),
-    () -> second_stick.getRawAxis(0),
-    () -> right_board.getRawAxis(1)
-  );
+  public final DriveTrain m_drive = Robot.isReal() ? new DriveTrainRealIO() : new DriveTrainSimIO();
 
   private final SendableChooser<Command> auto_chooser;
 
@@ -37,28 +34,25 @@ public class RobotContainer {
     configureBindings();
   }
 
-  public void updateSubsystemManager() {
-    if (RobotState.isEnabled()) {
-      m_subsystem_manager.periodic();
-    } else if (RobotState.isAutonomous()) {
-      m_subsystem_manager.periodic();
-    }
+  public void updateSwerve() {
+    m_drive.setSwerveDrive(
+      (Math.abs(main_stick.getRawAxis(1)) < 0.1) ? 0 : 1 * main_stick.getRawAxis(1), 
+      (Math.abs(main_stick.getRawAxis(0)) < 0.1) ? 0 : 1 * main_stick.getRawAxis(0), 
+      (Math.abs(second_stick.getRawAxis(0)) < 0.1) ? 0 : Math.signum(second_stick.getRawAxis(0)) * 1 * Math.pow(second_stick.getRawAxis(0), 2)
+      );
   }
 
   private void configureBindings() {
     new JoystickButton(main_stick, 8).onTrue(
-      new InstantCommand(m_subsystem_manager.m_drive::resetGyroAngle)
+      new InstantCommand(m_drive::resetGyroAngle)
     );
 
     new JoystickButton(main_stick, 9).onTrue(
-      new InstantCommand(m_subsystem_manager.m_drive::resetGyroAngle)
+      new InstantCommand(m_drive::resetGyroAngle)
     );
-
-    new JoystickButton(main_stick, 3)
-      .whileTrue(new AlgaeAlignmentPID(m_subsystem_manager.m_object_detection, m_subsystem_manager.m_drive));
-    }
+  }
 
   public Command getAutonomousCommand() {
-    return auto_chooser.getSelected();
+    return new InstantCommand();
   }
 }

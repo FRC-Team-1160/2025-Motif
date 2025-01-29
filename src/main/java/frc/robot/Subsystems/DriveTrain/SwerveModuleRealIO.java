@@ -6,6 +6,8 @@ package frc.robot.Subsystems.DriveTrain;
 
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
@@ -27,9 +29,9 @@ public class SwerveModuleRealIO extends SwerveModule{
   public CANcoder steer_sensor;
 
   public SwerveModuleRealIO(int drive_port, int steer_port, int sensor_port){
-    drive_motor = new TalonFX(drive_port, "CANivore");
-    steer_motor = new TalonFX(steer_port, "CANivore");
-    steer_sensor = new CANcoder(sensor_port, "CANivore");
+    drive_motor = new TalonFX(drive_port);
+    steer_motor = new TalonFX(steer_port);
+    steer_sensor = new CANcoder(sensor_port);
     
     TalonFXConfiguration drive_configs = new TalonFXConfiguration();
 
@@ -59,10 +61,10 @@ public class SwerveModuleRealIO extends SwerveModule{
 
     steer_configs.Feedback.FeedbackRemoteSensorID = sensor_port;
     steer_configs.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
-    steer_configs.Feedback.SensorToMechanismRatio = -1; //motors reversed?
+    steer_configs.Feedback.SensorToMechanismRatio = 1; //motors reversed?
 
-    steer_configs.Voltage.PeakForwardVoltage = 2;
-    steer_configs.Voltage.PeakReverseVoltage = -2;
+    steer_configs.Voltage.PeakForwardVoltage = 3;
+    steer_configs.Voltage.PeakReverseVoltage = -3;
 
     steer_configs.ClosedLoopGeneral.ContinuousWrap = true;
 
@@ -102,13 +104,13 @@ public class SwerveModuleRealIO extends SwerveModule{
    */
   public void setSpeed(double speed){
     SmartDashboard.putNumber("in_speed", speed / Swerve.WHEEL_DIAMETER);
-    // drive_motor.setControl(new VelocityVoltage(speedMetersPerSecond / Swerve.WHEEL_DIAMETER));
+    drive_motor.setControl(new VelocityVoltage(speed / Swerve.WHEEL_DIAMETER));
 
   }
 
   public void setAngle(Rotation2d angle){
     SmartDashboard.putNumber("in_angle", angle.getRotations());
-    // steer_motor.setControl(new PositionVoltage(-angle.getRotations())); //account for motor reversal?
+    steer_motor.setControl(new PositionVoltage(angle.getRotations())); //account for motor reversal?
   }
 
 }

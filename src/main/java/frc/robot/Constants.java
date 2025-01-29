@@ -106,24 +106,24 @@ public final class Constants {
     public static final double GEAR_RATIO = 5.01;
     public static final double OFFSET = 23.75 * 0.0254;
 
-    public static final double MAX_SPEED = 3;
+    public static final double MAX_SPEED = 2;
     public static final double DRIVE_SPEED = 0.5;
     public static final double TURN_SPEED = 0.5;
 
     public static class DriveMotorConfigs {
-      public static final double kP = 0.3;
+      public static final double kP = 0.2;
       public static final double kI = 0;
       public static final double kD = 0;
-      public static final double kS = 0;
-      public static final double kV = 0.5; 
+      public static final double kS = 0.13;
+      public static final double kV = 0.7; 
       public static final double kA = 0;
       public static final double kG = 0;
     }
 
     public static class SteerMotorConfigs {
-      public static final double kP = 10;
+      public static final double kP = -8;
       public static final double kI = 0;
-      public static final double kD = 0.7;
+      public static final double kD = 0;
       public static final double kS = 0; //doesnt work?
       public static final double kV = 0;
       public static final double kA = 0;
