@@ -16,6 +16,12 @@ public class DriveTrainRealIO extends DriveTrain {
 
   public DriveTrainRealIO(){
     gyro = new AHRS(AHRS.NavXComType.kMXP_SPI);
+    gyro.setAngleAdjustment(-90);
+
+    for (int i = 0; i < modules.length; i++) {
+      orchestra.addInstrument(((SwerveModuleRealIO)modules[i]).drive_motor);
+      orchestra.addInstrument(((SwerveModuleRealIO)modules[i]).steer_motor);
+    }
   }
 
   public SwerveModule initializeModule(int drive_port, int steer_port, int sensor_port){
@@ -28,7 +34,8 @@ public class DriveTrainRealIO extends DriveTrain {
   }
 
   public void resetGyroAngle() {
-    if (gyro != null) gyro.zeroYaw();
+    if (gyro == null) return;
+    gyro.zeroYaw();
     if (pose_estimator != null) pose_estimator.resetPose(new Pose2d(odom_pose.getX(), odom_pose.getY(), new Rotation2d()));
   }
 
@@ -42,4 +49,6 @@ public class DriveTrainRealIO extends DriveTrain {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
+
+  
 }

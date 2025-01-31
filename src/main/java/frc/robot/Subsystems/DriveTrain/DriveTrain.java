@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import org.json.simple.parser.ParseException;
 
+import com.ctre.phoenix6.Orchestra;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -29,6 +30,8 @@ import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -53,6 +56,9 @@ public abstract class DriveTrain extends SubsystemBase {
   /** State publisher for AdvantageScope. */
   protected StructPublisher<Rotation2d> adv_gyro_pub;
 
+  public Orchestra orchestra;
+
+
   public DriveTrain() {
     kinematics = new SwerveDriveKinematics(
         new Translation2d(Constants.Swerve.OFFSET, Constants.Swerve.OFFSET), // front left
@@ -60,6 +66,8 @@ public abstract class DriveTrain extends SubsystemBase {
         new Translation2d(-Constants.Swerve.OFFSET, Constants.Swerve.OFFSET), // back left
         new Translation2d(-Constants.Swerve.OFFSET, -Constants.Swerve.OFFSET) // back right
     );
+
+    orchestra = new Orchestra();
 
     modules = new SwerveModule[4];
     modules[0] = initializeModule(Constants.Port.FRONT_LEFT_DRIVE_MOTOR, Constants.Port.FRONT_LEFT_STEER_MOTOR,
@@ -339,6 +347,12 @@ public abstract class DriveTrain extends SubsystemBase {
     publishAdv();
 
   }
+
+public Command musicCommand() {
+  return new StartEndCommand(
+    () -> orchestra.play(),
+    () -> orchestra.stop());
+}
 
   @Override
   public void simulationPeriodic() {

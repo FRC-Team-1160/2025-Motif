@@ -36,9 +36,10 @@ public class RobotContainer {
 
   public void updateSwerve() {
     m_drive.setSwerveDrive(
-      (Math.abs(main_stick.getRawAxis(1)) < 0.1) ? 0 : 1 * main_stick.getRawAxis(1), 
-      (Math.abs(main_stick.getRawAxis(0)) < 0.1) ? 0 : 1 * main_stick.getRawAxis(0), 
-      (Math.abs(second_stick.getRawAxis(0)) < 0.1) ? 0 : Math.signum(second_stick.getRawAxis(0)) * 1 * Math.pow(second_stick.getRawAxis(0), 2)
+      (Math.abs(main_stick.getRawAxis(1)) < 0.1) ? 0 : 2.5 * main_stick.getRawAxis(1), 
+      (Math.abs(main_stick.getRawAxis(0)) < 0.1) ? 0 : 2.5 * main_stick.getRawAxis(0), 
+      (Math.abs(second_stick.getRawAxis(0)) < 0.1) ? 0 : Math.signum(second_stick.getRawAxis(0)) * 2.5
+       * Math.pow(second_stick.getRawAxis(0), 2)
       );
   }
 
@@ -49,6 +50,10 @@ public class RobotContainer {
 
     new JoystickButton(main_stick, 9).onTrue(
       new InstantCommand(m_drive::resetGyroAngle)
+    );
+
+    new JoystickButton(main_stick, 6).toggleOnFalse(
+      m_drive.musicCommand()
     );
   }
 
