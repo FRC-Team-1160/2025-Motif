@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.DriveTrain.DriveTrain;
 import frc.robot.Subsystems.DriveTrain.DriveTrainRealIO;
 import frc.robot.Subsystems.DriveTrain.DriveTrainSimIO;
@@ -24,7 +26,11 @@ public class RobotContainer {
   // private Joystick left_board = new Joystick(Constants.IO.LEFT_BOARD_PORT);
   private Joystick right_board = new Joystick(Constants.IO.RIGHT_BOARD_PORT);
 
+  private Joystick simp_stick = new Joystick(2);
+
   public final DriveTrain m_drive = Robot.isReal() ? new DriveTrainRealIO() : new DriveTrainSimIO();
+
+  public final Climber m_climber = new Climber();
 
   private final SendableChooser<Command> auto_chooser;
 
@@ -35,12 +41,20 @@ public class RobotContainer {
   }
 
   public void updateSwerve() {
+    // m_drive.setSwerveDrive(
+    //   (Math.abs(main_stick.getRawAxis(1)) < 0.1) ? 0 : 2.5 * main_stick.getRawAxis(1), 
+    //   (Math.abs(main_stick.getRawAxis(0)) < 0.1) ? 0 : 2.5 * main_stick.getRawAxis(0), 
+    //   (Math.abs(second_stick.getRawAxis(0)) < 0.1) ? 0 : Math.signum(second_stick.getRawAxis(0)) * 2.5
+    //    * Math.pow(second_stick.getRawAxis(0), 2)
+    //   );
+
     m_drive.setSwerveDrive(
-      (Math.abs(main_stick.getRawAxis(1)) < 0.1) ? 0 : 2.5 * main_stick.getRawAxis(1), 
-      (Math.abs(main_stick.getRawAxis(0)) < 0.1) ? 0 : 2.5 * main_stick.getRawAxis(0), 
-      (Math.abs(second_stick.getRawAxis(0)) < 0.1) ? 0 : Math.signum(second_stick.getRawAxis(0)) * 2.5
-       * Math.pow(second_stick.getRawAxis(0), 2)
+      (Math.abs(simp_stick.getRawAxis(5)) < 0.1) ? 0 : 1.5 * -simp_stick.getRawAxis(5), 
+      (Math.abs(simp_stick.getRawAxis(4)) < 0.1) ? 0 : 1.5 * -simp_stick.getRawAxis(4), 
+      (Math.abs(simp_stick.getRawAxis(0)) < 0.2) ? 0 : Math.signum(simp_stick.getRawAxis(0)) * 1.5
+        * Math.pow(simp_stick.getRawAxis(0), 2)
       );
+  
   }
 
   private void configureBindings() {
@@ -55,6 +69,18 @@ public class RobotContainer {
     new JoystickButton(main_stick, 6).toggleOnFalse(
       m_drive.musicCommand()
     );
+
+    new JoystickButton(simp_stick, 4).whileTrue(
+      new StartEndCommand(
+        () -> m_climber.setVolts(2), 
+        () -> m_climber.setVolts(0), 
+        m_climber));
+
+    new JoystickButton(simp_stick, 1).whileTrue(
+      new StartEndCommand(
+        () -> m_climber.setVolts(-2), 
+        () -> m_climber.setVolts(0), 
+        m_climber));
   }
 
   public Command getAutonomousCommand() {
