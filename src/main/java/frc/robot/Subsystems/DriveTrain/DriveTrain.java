@@ -31,6 +31,7 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -68,6 +69,7 @@ public abstract class DriveTrain extends SubsystemBase {
     );
 
     orchestra = new Orchestra();
+    orchestra.loadMusic("Music/output.chrp");
 
     modules = new SwerveModule[4];
     modules[0] = initializeModule(Constants.Port.FRONT_LEFT_DRIVE_MOTOR, Constants.Port.FRONT_LEFT_STEER_MOTOR,
@@ -124,6 +126,8 @@ public abstract class DriveTrain extends SubsystemBase {
     );
 
     setupDashboard();
+
+    SmartDashboard.putString("Music", " ");
   }
 
   /**
@@ -348,11 +352,29 @@ public abstract class DriveTrain extends SubsystemBase {
 
   }
 
-public Command musicCommand() {
-  return new StartEndCommand(
-    () -> orchestra.play(),
-    () -> orchestra.stop());
-}
+
+  public Command musicCommand(String filename, int tracks) {
+    return new FunctionalCommand(
+      () -> {
+        int t = 0;
+        for (SwerveModule module : modules) {
+            orchestra.addInstrument(((SwerveModuleRealIO)module).drive_motor, t++ % tracks); //increment track number by 1; reset when max tracks reached
+            orchestra.addInstrument(((SwerveModuleRealIO)module).steer_motor, t++ % tracks);
+        }
+        orchestra.loadMusic("Music/" + filename + ".chrp");
+        orchestra.play();
+        SmartDashboard.putString("Music", filename);},
+      () -> {},
+      canceled -> {
+        orchestra.stop();
+        SmartDashboard.putString("Music", " ");},
+      () -> !orchestra.isPlaying()
+    ).ignoringDisable(true);
+  }
+
+  public Command musicCommand(String filename) {
+    return musicCommand(filename, 8);
+  }
 
   @Override
   public void simulationPeriodic() {

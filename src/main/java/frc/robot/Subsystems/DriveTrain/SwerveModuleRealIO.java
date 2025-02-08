@@ -46,6 +46,8 @@ public class SwerveModuleRealIO extends SwerveModule{
 
     drive_configs.Feedback.SensorToMechanismRatio = 5.01;
 
+    drive_configs.Audio.AllowMusicDurDisable = true;
+
     drive_motor.getConfigurator().apply(drive_configs);
 
     TalonFXConfiguration steer_configs = new TalonFXConfiguration();
@@ -67,6 +69,8 @@ public class SwerveModuleRealIO extends SwerveModule{
     steer_configs.Voltage.PeakReverseVoltage = -3;
 
     steer_configs.ClosedLoopGeneral.ContinuousWrap = true;
+
+    steer_configs.Audio.AllowMusicDurDisable = true;
 
     steer_motor.getConfigurator().apply(steer_configs);
 

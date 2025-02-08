@@ -18,10 +18,6 @@ public class DriveTrainRealIO extends DriveTrain {
     gyro = new AHRS(AHRS.NavXComType.kMXP_SPI);
     gyro.setAngleAdjustment(-90);
 
-    for (int i = 0; i < modules.length; i++) {
-      orchestra.addInstrument(((SwerveModuleRealIO)modules[i]).drive_motor);
-      orchestra.addInstrument(((SwerveModuleRealIO)modules[i]).steer_motor);
-    }
   }
 
   public SwerveModule initializeModule(int drive_port, int steer_port, int sensor_port){

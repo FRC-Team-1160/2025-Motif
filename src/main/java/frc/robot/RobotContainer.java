@@ -52,9 +52,24 @@ public class RobotContainer {
       new InstantCommand(m_drive::resetGyroAngle)
     );
 
-    new JoystickButton(main_stick, 6).toggleOnFalse(
-      m_drive.musicCommand()
+    new JoystickButton(main_stick, 7).toggleOnFalse(
+      m_drive.musicCommand("test")
     );
+
+    new JoystickButton(main_stick, 6).toggleOnFalse(
+      m_drive.musicCommand("mario",2)
+    );
+
+    new JoystickButton(main_stick, 10).toggleOnFalse(
+      m_drive.musicCommand("USA", 2)
+    );
+
+    new JoystickButton(main_stick, 11).toggleOnFalse(
+      m_drive.musicCommand("datingStart", 4)
+    );
+
+
+
   }
 
   public Command getAutonomousCommand() {
