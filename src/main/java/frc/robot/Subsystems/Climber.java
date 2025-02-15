@@ -11,7 +11,7 @@ public class Climber extends SubsystemBase {
     public TalonFX l_motor, r_motor;
     
     public Climber() {
-        l_motor = new TalonFX(12);
+        l_motor = new TalonFX(6);
         r_motor = new TalonFX(13);
     }
 

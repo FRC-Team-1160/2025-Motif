@@ -66,33 +66,53 @@ public class RobotContainer {
       new InstantCommand(m_drive::resetGyroAngle)
     );
 
-    new JoystickButton(main_stick, 7).toggleOnFalse(
-      m_drive.musicCommand("test")
-    );
+    // new JoystickButton(main_stick, 7).toggleOnFalse(
+    //   m_drive.musicCommand("test")
+    // );
 
-    new JoystickButton(main_stick, 6).toggleOnFalse(
-      m_drive.musicCommand("mario",2)
-    );
+    // new JoystickButton(main_stick, 6).toggleOnFalse(
+    //   m_drive.musicCommand("mario",2)
+    // );
 
-    new JoystickButton(main_stick, 10).toggleOnFalse(
-      m_drive.musicCommand("USA", 2)
-    );
+    // new JoystickButton(main_stick, 10).toggleOnFalse(
+    //   m_drive.musicCommand("USA", 2)
+    // );
 
-    new JoystickButton(main_stick, 11).toggleOnFalse(
-      m_drive.musicCommand("datingStart", 4)
-    );
+    // new JoystickButton(main_stick, 11).toggleOnFalse(
+    //   m_drive.musicCommand("datingStart", 4)
+    // );
 
-    new JoystickButton(simp_stick, 4).whileTrue(
+    // new JoystickButton(simp_stick, 1).toggleOnFalse(
+    //   m_drive.musicCommand("test", 1)
+    // );
+
+    // new JoystickButton(simp_stick, 2).toggleOnFalse(
+    //   m_drive.musicCommand("mario",2)
+    // );
+
+    // new JoystickButton(simp_stick, 3).toggleOnFalse(
+    //   m_drive.musicCommand("USA", 2)
+    // );
+
+    // new JoystickButton(simp_stick, 4).toggleOnFalse(
+    //   m_drive.musicCommand("datingStart", 4)
+    // );
+
+    new JoystickButton(simp_stick, 5).whileTrue(
       new StartEndCommand(
         () -> m_climber.setVolts(2), 
         () -> m_climber.setVolts(0), 
         m_climber));
 
-    new JoystickButton(simp_stick, 1).whileTrue(
+    new JoystickButton(simp_stick, 6).whileTrue(
       new StartEndCommand(
         () -> m_climber.setVolts(-2), 
         () -> m_climber.setVolts(0), 
         m_climber));
+    
+    new JoystickButton(simp_stick, 8).onTrue(
+      new InstantCommand(m_drive::resetGyroAngle)
+    );
   }
 
   public Command getAutonomousCommand() {
