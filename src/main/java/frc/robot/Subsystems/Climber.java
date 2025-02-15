@@ -8,15 +8,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Climber extends SubsystemBase {
 
-    public TalonFX l_motor, r_motor, on_motor, off_motor;
+    public TalonFX l_motor, r_motor;
     
     public Climber() {
         l_motor = new TalonFX(12);
-        r_motor = new TalonFX(13);
-        on_motor = new TalonFX(3);
-        off_motor= new TalonFX(2);
-        
-        
+        r_motor = new TalonFX(13);        
     }
 
     public void setVolts(double volts) {
