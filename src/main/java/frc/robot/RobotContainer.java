@@ -74,7 +74,7 @@ public class RobotContainer {
       m_drive.musicCommand("mario",2)
     );
 
-    new JoystickButton(simp_stick, 2).toggleOnFalse(
+    new JoystickButton(main_stick, 10).toggleOnFalse(
       m_drive.musicCommand("USA", 2)
     );
 
@@ -88,23 +88,15 @@ public class RobotContainer {
         () -> m_climber.setVolts(0), 
         m_climber));
 
-    // new JoystickButton(simp_stick, 4).whileTrue(
-    //     new StartEndCommand(
-    //         () -> m_climber.setVolts(2), 
-    //         () -> m_climber.setVolts(0.4), 
-    //         m_climber));
-
-    // new JoystickButton(simp_stick, 1).whileTrue(
-    //     new StartEndCommand(
-    //         () -> m_climber.setVolts(0.15), 
-    //         () -> m_climber.setVolts(0), 
-    //         m_climber));
-
-    new JoystickButton(simp_stick, 6).whileTrue(
+    new JoystickButton(simp_stick, 1).whileTrue(
       new StartEndCommand(
         () -> m_climber.setVolts(-3), 
         () -> m_climber.setVolts(0), 
         m_climber));
+    
+    new JoystickButton(simp_stick, 8).onTrue(
+      new InstantCommand(m_drive::resetGyroAngle)
+    );
   }
 
   public Command getAutonomousCommand() {
