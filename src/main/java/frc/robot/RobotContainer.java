@@ -26,7 +26,7 @@ public class RobotContainer {
   // private Joystick left_board = new Joystick(Constants.IO.LEFT_BOARD_PORT);
   private Joystick right_board = new Joystick(Constants.IO.RIGHT_BOARD_PORT);
 
-  private Joystick simp_stick = new Joystick(2);
+  private Joystick simp_stick = new Joystick(4);
 
   public final DriveTrain m_drive = Robot.isReal() ? new DriveTrainRealIO() : new DriveTrainSimIO();
 
@@ -49,9 +49,9 @@ public class RobotContainer {
     //   );
 
     m_drive.setSwerveDrive(
-      (Math.abs(simp_stick.getRawAxis(5)) < 0.1) ? 0 : 1.5 * -simp_stick.getRawAxis(5), 
-      (Math.abs(simp_stick.getRawAxis(4)) < 0.1) ? 0 : 1.5 * -simp_stick.getRawAxis(4), 
-      (Math.abs(simp_stick.getRawAxis(0)) < 0.2) ? 0 : Math.signum(simp_stick.getRawAxis(0)) * 1.5
+      (Math.abs(simp_stick.getRawAxis(5)) < 0.1) ? 0 : 1 * -simp_stick.getRawAxis(5), 
+      (Math.abs(simp_stick.getRawAxis(4)) < 0.1) ? 0 : 1 * -simp_stick.getRawAxis(4), 
+      (Math.abs(simp_stick.getRawAxis(0)) < 0.2) ? 0 : Math.signum(simp_stick.getRawAxis(0)) * 1
         * Math.pow(simp_stick.getRawAxis(0), 2)
       );
   
@@ -62,35 +62,47 @@ public class RobotContainer {
       new InstantCommand(m_drive::resetGyroAngle)
     );
 
-    new JoystickButton(main_stick, 9).onTrue(
+    new JoystickButton(simp_stick, 7).onTrue(
       new InstantCommand(m_drive::resetGyroAngle)
     );
 
-    new JoystickButton(main_stick, 7).toggleOnFalse(
-      m_drive.musicCommand("test")
+    new JoystickButton(simp_stick, 4).toggleOnFalse(
+      m_drive.musicCommand("test", 1)
     );
 
-    new JoystickButton(main_stick, 6).toggleOnFalse(
+    new JoystickButton(simp_stick, 3).toggleOnFalse(
       m_drive.musicCommand("mario",2)
     );
 
-    new JoystickButton(main_stick, 10).toggleOnFalse(
+    new JoystickButton(simp_stick, 2).toggleOnFalse(
       m_drive.musicCommand("USA", 2)
     );
 
-    new JoystickButton(main_stick, 11).toggleOnFalse(
+    new JoystickButton(simp_stick, 1).toggleOnFalse(
       m_drive.musicCommand("datingStart", 4)
     );
 
-    new JoystickButton(simp_stick, 4).whileTrue(
+    new JoystickButton(simp_stick, 5).whileTrue(
       new StartEndCommand(
-        () -> m_climber.setVolts(2), 
+        () -> m_climber.setVolts(3), 
         () -> m_climber.setVolts(0), 
         m_climber));
 
-    new JoystickButton(simp_stick, 1).whileTrue(
+    // new JoystickButton(simp_stick, 4).whileTrue(
+    //     new StartEndCommand(
+    //         () -> m_climber.setVolts(2), 
+    //         () -> m_climber.setVolts(0.4), 
+    //         m_climber));
+
+    // new JoystickButton(simp_stick, 1).whileTrue(
+    //     new StartEndCommand(
+    //         () -> m_climber.setVolts(0.15), 
+    //         () -> m_climber.setVolts(0), 
+    //         m_climber));
+
+    new JoystickButton(simp_stick, 6).whileTrue(
       new StartEndCommand(
-        () -> m_climber.setVolts(-2), 
+        () -> m_climber.setVolts(-3), 
         () -> m_climber.setVolts(0), 
         m_climber));
   }

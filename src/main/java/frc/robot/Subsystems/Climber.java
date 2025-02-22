@@ -11,13 +11,13 @@ public class Climber extends SubsystemBase {
     public TalonFX l_motor, r_motor;
     
     public Climber() {
-        l_motor = new TalonFX(12);
-        r_motor = new TalonFX(13);
+        l_motor = new TalonFX(12, "CANivore");
+        r_motor = new TalonFX(13, "CANivore");
     }
 
     public void setVolts(double volts) {
         SmartDashboard.putNumber("climber speed", volts);
-        l_motor.setControl(new VoltageOut(volts));
+        // l_motor.setControl(new VoltageOut(volts));
         r_motor.setControl(new VoltageOut(-volts));
     }
 
