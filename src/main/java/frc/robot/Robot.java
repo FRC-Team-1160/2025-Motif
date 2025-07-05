@@ -22,25 +22,33 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 public class Robot extends TimedRobot {
   private final GenericHID mainJoy = new GenericHID(1);
   private Command m_autonomousCommand;
-  private final TalonFX motorOne = new TalonFX(0):
-  private final TalonFX motorTwo = new TalonFX(1);
-  private final TalonFX motorThree = new TalonFX(2);
-  private final TalonFX motorFour = new TalonFX(3);
+  private final TalonFX motorOne = new TalonFX(2);
+  private final TalonFX motorTwo = new TalonFX(4);
+  private final TalonFX motorThree = new TalonFX(6);
+  private final TalonFX motorFour = new TalonFX(8);
 
 
   private final RobotContainer m_robotContainer;
 
   public void fourMotorsVolts(double one, double two, double three, double four){
-    motorOne.setVolts(one);
-    motorTwo.setVolts(two);
-    motorThree.setVolts(three);
-    motorFour.setVolts(four);
+    motorOne.setVoltage(one);
+    motorTwo.setVoltage(two);
+    motorThree.setVoltage(three);
+    motorFour.setVoltage(four);
+  }
+
+  public void turnOFF(){
+    motorOne.setVoltage(0.0);
+    motorTwo.setVoltage(0.0);
+    motorThree.setVoltage(0.0);
+    motorFour.setVoltage(0.0);
   }
   
   private void binds(){
-  new JoystickButton(mainJoy, 9)
+  new JoystickButton(mainJoy, 1)
       .whileTrue(new StartEndCommand(
-          () ->  fourMotorsVolts(2.0, 2.0, 2.0, 2.0):)
+          () -> fourMotorsVolts(2.0, 2.0, 2.0, 2.0),
+          () ->  turnOFF()));
   }
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -99,6 +107,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    binds();
   }
 
   /** This function is called periodically during operator control. */
