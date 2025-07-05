@@ -22,26 +22,30 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 public class Robot extends TimedRobot {
   private final GenericHID mainJoy = new GenericHID(1);
   private Command m_autonomousCommand;
-  private final TalonFX motorOne = new TalonFX(2);
-  private final TalonFX motorTwo = new TalonFX(4);
-  private final TalonFX motorThree = new TalonFX(6);
-  private final TalonFX motorFour = new TalonFX(8);
+  private final TalonFX motorOne = new TalonFX(1);
+  private final TalonFX motorTwo = new TalonFX(2);
+  private final TalonFX motorThree = new TalonFX(3);
+  private final TalonFX motorFour = new TalonFX(4);
+  private final TalonFX motorFive = new TalonFX(5);
+  private final TalonFX motorSix = new TalonFX(6);
+  private final TalonFX motorSeven = new TalonFX(7);
+  private final TalonFX motorEight = new TalonFX(8);
 
 
   private final RobotContainer m_robotContainer;
 
   public void fourMotorsVolts(double one, double two, double three, double four){
-    motorOne.setVoltage(one);
-    motorTwo.setVoltage(two);
-    motorThree.setVoltage(three);
-    motorFour.setVoltage(four);
+    motorTwo.setVoltage(one);
+    motorFour.setVoltage(two);
+    motorSix.setVoltage(three);
+    motorEight.setVoltage(four);
   }
 
   public void turnOFF(){
-    motorOne.setVoltage(0.0);
     motorTwo.setVoltage(0.0);
-    motorThree.setVoltage(0.0);
     motorFour.setVoltage(0.0);
+    motorSix.setVoltage(0.0);
+    motorEight.setVoltage(0.0);
   }
   
   private void binds(){
