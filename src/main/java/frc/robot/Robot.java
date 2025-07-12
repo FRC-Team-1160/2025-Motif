@@ -4,13 +4,14 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.hardware.TalonFX;
+
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import com.ctre.phoenix6.hardware.TalonFX;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 
 
@@ -41,7 +42,29 @@ public class Robot extends TimedRobot {
     motorEight.setVoltage(four);
   }
 
-  public void turnOFF(){
+  
+  public void turnL(){
+    motorOne.setVoltage(2.0);
+    motorThree.setVoltage(2.0);
+    motorFive.setVoltage(2.0);
+    motorSeven.setVoltage(2.0);
+  }
+
+  public void turnR(){
+    motorOne.setVoltage(-2.0);
+    motorThree.setVoltage(-2.0);
+    motorFive.setVoltage(-2.0);
+    motorSeven.setVoltage(-2.0);
+  }
+  
+  public void turnOffG(){
+   motorOne.setVoltage(0);
+    motorThree.setVoltage(0);
+    motorFive.setVoltage(0);
+    motorSeven.setVoltage(0);
+  }
+
+  public void turnOffD(){
     motorTwo.setVoltage(0.0);
     motorFour.setVoltage(0.0);
     motorSix.setVoltage(0.0);
@@ -49,10 +72,22 @@ public class Robot extends TimedRobot {
   }
   
   private void binds(){
-  new JoystickButton(mainJoy, 1)
+    new JoystickButton(mainJoy, 1)
       .whileTrue(new StartEndCommand(
           () -> fourMotorsVolts(2.0, 2.0, 2.0, 2.0),
-          () ->  turnOFF()));
+          () ->  turnOffD()));
+
+    
+    new JoystickButton(mainJoy, 2)
+      .onTrue(new StartEndCommand(
+          () -> turnL(),
+          () ->  turnOffG()));
+
+    new JoystickButton(mainJoy, 3)
+      .onTrue(new StartEndCommand(
+          () -> turnR(),
+          () ->  turnOffG()));
+    
   }
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -113,6 +148,7 @@ public class Robot extends TimedRobot {
     }
 
     binds();
+
   }
 
   /** This function is called periodically during operator control. */
