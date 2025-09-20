@@ -7,11 +7,13 @@ package frc.robot;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 
 
 
@@ -31,6 +33,8 @@ public class Robot extends TimedRobot {
   private final TalonFX motorSix = new TalonFX(6);
   private final TalonFX motorSeven = new TalonFX(7);
   private final TalonFX motorEight = new TalonFX(8);
+  private final Joystick controller = new Joystick(2);
+  private final double voltsDefault = 2.0;
 
 
   private final RobotContainer m_robotContainer;
@@ -40,6 +44,13 @@ public class Robot extends TimedRobot {
     motorFour.setVoltage(two);
     motorSix.setVoltage(three);
     motorEight.setVoltage(four);
+  }
+
+  public void setDriretion(double volts){
+    motorOne.setVoltage(volts);
+    motorThree.setVoltage(volts);
+    motorFive.setVoltage(volts);
+    motorSeven.setVoltage(volts);
   }
 
   
@@ -87,7 +98,22 @@ public class Robot extends TimedRobot {
       .onTrue(new StartEndCommand(
           () -> turnR(),
           () ->  turnOffG()));
+
+    if((controller.getDirectionDegrees() >= 0) && (controller.getDirectionDegrees() <= 180)){
+      setDriretion(voltsDefault);
+    }
+
+    if((controller.getDirectionDegrees() >= 181) && (controller.getDirectionDegrees() <= 359)){
+      setDriretion(-voltsDefault);
+    }
     
+    if((controller.getMagnitude() <= 1.0) && (controller.getMagnitude() >= 0.0)){
+      fourMotorsVolts(1, 1, 1, 1);
+    }
+
+    if((controller.getMagnitude() <= 2.0) && (controller.getMagnitude() > 1.0)){
+      fourMotorsVolts(1, 1, 1, 1);
+    }
   }
   /**
    * This function is run when the robot is first started up and should be used for any
