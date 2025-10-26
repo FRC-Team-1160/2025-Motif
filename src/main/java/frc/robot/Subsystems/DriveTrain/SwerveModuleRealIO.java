@@ -61,12 +61,12 @@ public class SwerveModuleRealIO extends SwerveModule{
       .withKA(SteerMotorConfigs.kA)
       .withKG(SteerMotorConfigs.kG);
 
-    steer_configs.Feedback.FeedbackRemoteSensorID = sensor_port;
-    steer_configs.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
-    steer_configs.Feedback.SensorToMechanismRatio = 1; //motors reversed?
+    // steer_configs.Feedback.FeedbackRemoteSensorID = sensor_port;
+    // steer_configs.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
+    // steer_configs.Feedback.SensorToMechanismRatio = 1; //motors reversed?
 
-    steer_configs.Voltage.PeakForwardVoltage = 3;
-    steer_configs.Voltage.PeakReverseVoltage = -3;
+    steer_configs.Voltage.PeakForwardVoltage = 1;
+    steer_configs.Voltage.PeakReverseVoltage = -1;
 
     steer_configs.ClosedLoopGeneral.ContinuousWrap = true;
 

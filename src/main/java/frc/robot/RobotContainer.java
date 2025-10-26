@@ -21,16 +21,16 @@ import frc.robot.Subsystems.DriveTrain.DriveTrainSimIO;
 
 
 public class RobotContainer {
-  private Joystick main_stick = new Joystick(Constants.IO.MAIN_PORT);
-  private Joystick second_stick = new Joystick(Constants.IO.COPILOT_PORT);
-  // private Joystick left_board = new Joystick(Constants.IO.LEFT_BOARD_PORT);
-  private Joystick right_board = new Joystick(Constants.IO.RIGHT_BOARD_PORT);
+  // private Joystick main_stick = new Joystick(Constants.IO.MAIN_PORT);
+  // private Joystick second_stick = new Joystick(Constants.IO.COPILOT_PORT);
+  // // private Joystick left_board = new Joystick(Constants.IO.LEFT_BOARD_PORT);
+  // private Joystick right_board = new Joystick(Constants.IO.RIGHT_BOARD_PORT);
 
-  private Joystick simp_stick = new Joystick(2);
+  private Joystick simp_stick = new Joystick(1);
 
   public final DriveTrain m_drive = Robot.isReal() ? new DriveTrainRealIO() : new DriveTrainSimIO();
 
-  public final Climber m_climber = new Climber();
+  // public final Climber m_climber = new Climber();
 
   private final SendableChooser<Command> auto_chooser;
 
@@ -41,58 +41,68 @@ public class RobotContainer {
   }
 
   public void updateSwerve() {
-    // m_drive.setSwerveDrive(
-    //   (Math.abs(main_stick.getRawAxis(1)) < 0.1) ? 0 : 2.5 * main_stick.getRawAxis(1), 
-    //   (Math.abs(main_stick.getRawAxis(0)) < 0.1) ? 0 : 2.5 * main_stick.getRawAxis(0), 
-    //   (Math.abs(second_stick.getRawAxis(0)) < 0.1) ? 0 : Math.signum(second_stick.getRawAxis(0)) * 2.5
-    //    * Math.pow(second_stick.getRawAxis(0), 2)
-    //   );
+    double rightStickUpDown = simp_stick.getRawAxis(5);
+    SmartDashboard.putNumber("joystick_axis_5", rightStickUpDown);
+
+    double x_metersPerSecond = (Math.abs(simp_stick.getRawAxis(5)) < 0.1) ? 0 : 1.5 * -simp_stick.getRawAxis(5);
+    SmartDashboard.putNumber("x_mps", x_metersPerSecond);
+
+    double rightStickLeftRight = simp_stick.getRawAxis(4);
+    SmartDashboard.putNumber("joystick_axis_4", rightStickLeftRight);
+
+    double y_metersPerSecond = (Math.abs(simp_stick.getRawAxis(4)) < 0.1) ? 0 : 1.5 * -simp_stick.getRawAxis(4);
+    SmartDashboard.putNumber("y_mps", y_metersPerSecond);
+
+    double leftStickLeftRight = simp_stick.getRawAxis(0);
+    double angle_radiansPerSecond =  (Math.abs(simp_stick.getRawAxis(0)) < 0.2) ? 0 : Math.signum(simp_stick.getRawAxis(0)) * 1.5
+    * Math.pow(simp_stick.getRawAxis(0), 2);
+    SmartDashboard.putNumber("axis_0", leftStickLeftRight);
+    SmartDashboard.putNumber("angle", angle_radiansPerSecond);
 
     m_drive.setSwerveDrive(
-      (Math.abs(simp_stick.getRawAxis(5)) < 0.1) ? 0 : 1.5 * -simp_stick.getRawAxis(5), 
-      (Math.abs(simp_stick.getRawAxis(4)) < 0.1) ? 0 : 1.5 * -simp_stick.getRawAxis(4), 
-      (Math.abs(simp_stick.getRawAxis(0)) < 0.2) ? 0 : Math.signum(simp_stick.getRawAxis(0)) * 1.5
-        * Math.pow(simp_stick.getRawAxis(0), 2)
+      x_metersPerSecond, 
+      y_metersPerSecond, 
+      angle_radiansPerSecond
       );
   
   }
 
   private void configureBindings() {
-    new JoystickButton(main_stick, 8).onTrue(
-      new InstantCommand(m_drive::resetGyroAngle)
-    );
+    // new JoystickButton(main_stick, 8).onTrue(
+    //   new InstantCommand(m_drive::resetGyroAngle)
+    // );
 
-    new JoystickButton(main_stick, 9).onTrue(
-      new InstantCommand(m_drive::resetGyroAngle)
-    );
+    // new JoystickButton(main_stick, 9).onTrue(
+    //   new IntantCommand(m_drive::resetGyroAngle)
+    // );
 
-    new JoystickButton(main_stick, 7).toggleOnFalse(
-      m_drive.musicCommand("test")
-    );
+    // new JoystickButton(main_stick, 7).toggleOnFalse(
+    //   m_drive.musicCommand("test")
+    // );
 
-    new JoystickButton(main_stick, 6).toggleOnFalse(
-      m_drive.musicCommand("mario",2)
-    );
+    // new JoystickButton(main_stick, 6).toggleOnFalse(
+    //   m_drive.musicCommand("mario",2)
+    // );
 
-    new JoystickButton(main_stick, 10).toggleOnFalse(
-      m_drive.musicCommand("USA", 2)
-    );
+    // new JoystickButton(main_stick, 10).toggleOnFalse(
+    //   m_drive.musicCommand("USA", 2)
+    // );
 
-    new JoystickButton(main_stick, 11).toggleOnFalse(
-      m_drive.musicCommand("datingStart", 4)
-    );
+    // new JoystickButton(main_stick, 11).toggleOnFalse(
+    //   m_drive.musicCommand("datingStart", 4)
+    // );
 
-    new JoystickButton(simp_stick, 4).whileTrue(
-      new StartEndCommand(
-        () -> m_climber.setVolts(2), 
-        () -> m_climber.setVolts(0), 
-        m_climber));
+    // new JoystickButton(simp_stick, 4).whileTrue(
+    //   new StartEndCommand(
+    //     () -> m_climber.setVolts(2), 
+    //     () -> m_climber.setVolts(0), 
+    //     m_climber));
 
-    new JoystickButton(simp_stick, 1).whileTrue(
-      new StartEndCommand(
-        () -> m_climber.setVolts(-2), 
-        () -> m_climber.setVolts(0), 
-        m_climber));
+    // new JoystickButton(simp_stick, 1).whileTrue(
+    //   new StartEndCommand(
+    //     () -> m_climber.setVolts(-2), 
+    //     () -> m_climber.setVolts(0), 
+    //     m_climber));
   }
 
   public Command getAutonomousCommand() {
