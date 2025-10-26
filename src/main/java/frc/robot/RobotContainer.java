@@ -72,9 +72,9 @@ public class RobotContainer {
     //   new InstantCommand(m_drive::resetGyroAngle)
     // );
 
-    // new JoystickButton(main_stick, 9).onTrue(
-    //   new IntantCommand(m_drive::resetGyroAngle)
-    // );
+    new JoystickButton(simp_stick, 8).onTrue(
+      new InstantCommand(m_drive::resetGyroAngle)
+    );
 
     // new JoystickButton(main_stick, 7).toggleOnFalse(
     //   m_drive.musicCommand("test")
