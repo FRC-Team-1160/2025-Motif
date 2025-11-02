@@ -25,6 +25,7 @@ import frc.robot.Constants.Swerve.SteerMotorConfigs;
 public class SwerveModuleRealIO extends SwerveModule{
 
   public TalonFX steer_motor, drive_motor;
+  public int steerPortVar;
 
   public CANcoder steer_sensor;
 
@@ -32,6 +33,7 @@ public class SwerveModuleRealIO extends SwerveModule{
     drive_motor = new TalonFX(drive_port);
     steer_motor = new TalonFX(steer_port);
     steer_sensor = new CANcoder(sensor_port);
+    steerPortVar = steer_port;
     
     TalonFXConfiguration drive_configs = new TalonFXConfiguration();
 
@@ -63,17 +65,16 @@ public class SwerveModuleRealIO extends SwerveModule{
 
     steer_configs.Feedback.FeedbackRemoteSensorID = sensor_port;
     steer_configs.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
-    // steer_configs.Feedback.SensorToMechanismRatio = 1; //motors reversed?
+    // steer_configs.Feedback.SensorToMechanismRatio = 1; // defaults to 1
 
-    steer_configs.Voltage.PeakForwardVoltage = 1;
-    steer_configs.Voltage.PeakReverseVoltage = -1;
+    steer_configs.Voltage.PeakForwardVoltage = 3.5;
+    steer_configs.Voltage.PeakReverseVoltage = -3.5;
 
     steer_configs.ClosedLoopGeneral.ContinuousWrap = true;
 
     steer_configs.Audio.AllowMusicDurDisable = true;
 
     steer_motor.getConfigurator().apply(steer_configs);
-
   }
 
   public double getSpeed(){
@@ -114,7 +115,23 @@ public class SwerveModuleRealIO extends SwerveModule{
 
   public void setAngle(Rotation2d angle){
     SmartDashboard.putNumber("in_angle", angle.getRotations());
-    steer_motor.setControl(new PositionVoltage(angle.getRotations())); //account for motor reversal?
+    // this works fine
+    // steer_motor.setVoltage(3);
+
+    var request = new PositionVoltage(0).withSlot(0);
+    steer_motor.setControl(request.withPosition(0));
+    // steer_motor.setControl(0);
+    // steer_motor.setControl(new PositionVoltage(0))
+
+    String DashboardKey = "steerAbsPos" + steerPortVar;
+    SmartDashboard.putString(DashboardKey, steer_sensor.getAbsolutePosition().toString());
+
+    // String DashboardKey2 = "steerPos" + steerPortVar;
+    // SmartDashboard.putString(DashboardKey2, steer_motor.getPosition().toString());
+
+    String DashboardKey3 = "steerVel" + steerPortVar;
+    SmartDashboard.putString(DashboardKey3, steer_motor.getDutyCycle().toString());
+
   }
 
 }
