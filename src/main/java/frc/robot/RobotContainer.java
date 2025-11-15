@@ -6,6 +6,8 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -13,11 +15,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.DriveTrain.DriveTrain;
 import frc.robot.Subsystems.DriveTrain.DriveTrainRealIO;
 import frc.robot.Subsystems.DriveTrain.DriveTrainSimIO;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 
 public class RobotContainer {
@@ -25,6 +29,9 @@ public class RobotContainer {
   // private Joystick second_stick = new Joystick(Constants.IO.COPILOT_PORT);
   // // private Joystick left_board = new Joystick(Constants.IO.LEFT_BOARD_PORT);
   // private Joystick right_board = new Joystick(Constants.IO.RIGHT_BOARD_PORT);
+
+
+  
 
   private Joystick simp_stick = new Joystick(1);
 
@@ -74,6 +81,10 @@ public class RobotContainer {
 
     new JoystickButton(simp_stick, 8).onTrue(
       new InstantCommand(m_drive::resetGyroAngle)
+    );
+
+    new JoystickButton(simp_stick,1).onTrue(
+      new RunCommand(m_drive::setAngle)
     );
 
     // new JoystickButton(main_stick, 7).toggleOnFalse(

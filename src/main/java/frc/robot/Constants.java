@@ -33,8 +33,8 @@ public final class Constants {
     public static final int FRONT_RIGHT_CODER = 3;
     // we swapped these in code, but we could do this in the tuner
     // we may need to recalibrate
-    public static final int BACK_LEFT_CODER = 7;
-    public static final int BACK_RIGHT_CODER = 5;
+    public static final int BACK_LEFT_CODER = 5;
+    public static final int BACK_RIGHT_CODER = 7;
 
     public static final int LEFT_ELEVATOR_MOTOR = 10;
     public static final int RIGHT_ELEVATOR_MOTOR = 11;
@@ -113,19 +113,19 @@ public final class Constants {
     public static final double TURN_SPEED = 0.5;
 
     public static class DriveMotorConfigs {
-      public static final double kP = 0.1;
+      public static final double kP = 0.0; //0.1
       public static final double kI = 0;
-      public static final double kD = 0.1;
-      public static final double kS = 0.13;
-      public static final double kV = 0.7; 
+      public static final double kD = 0;//0.1;
+      public static final double kS = 0;//0.13;
+      public static final double kV = 0;//0.7; 
       public static final double kA = 0;
       public static final double kG = 0;
     }
 
     public static class SteerMotorConfigs {
-      public static final double kP = 5;
+      public static final double kP = 4;//0.5;
       public static final double kI = 0;
-      public static final double kD = 0.1;
+      public static final double kD = 0;
       public static final double kS = 0; //doesnt work?
       public static final double kV = 0;
       public static final double kA = 0;

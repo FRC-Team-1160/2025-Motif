@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems.DriveTrain;
 
+import static edu.wpi.first.units.Units.Degrees;
+
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -11,11 +13,14 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
+import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.MutAngle;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Swerve;
 import frc.robot.Constants.Swerve.DriveMotorConfigs;
@@ -65,7 +70,9 @@ public class SwerveModuleRealIO extends SwerveModule{
 
     steer_configs.Feedback.FeedbackRemoteSensorID = sensor_port;
     steer_configs.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
+    //steer_configs.Feedback.RotorToSensorRatio = 22.5;
     // steer_configs.Feedback.SensorToMechanismRatio = 1; // defaults to 1
+    steer_configs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
     steer_configs.Voltage.PeakForwardVoltage = 3.5;
     steer_configs.Voltage.PeakReverseVoltage = -3.5;
@@ -118,8 +125,12 @@ public class SwerveModuleRealIO extends SwerveModule{
     // this works fine
     // steer_motor.setVoltage(3);
 
-    var request = new PositionVoltage(0).withSlot(0);
-    steer_motor.setControl(request.withPosition(0));
+    // System.out.println("steer port var" + steerPortVar);
+    //if (steerPortVar == 3 || steerPortVar == 7) {
+      var request = new PositionVoltage(0).withSlot(0);
+      // var angleInDegrees = Degrees.of(80);
+      steer_motor.setControl(request.withPosition(0.25));
+    //}
     // steer_motor.setControl(0);
     // steer_motor.setControl(new PositionVoltage(0))
 

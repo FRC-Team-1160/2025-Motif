@@ -59,6 +59,7 @@ public abstract class DriveTrain extends SubsystemBase {
 
   public Orchestra orchestra;
 
+  public SwerveModuleState[] tempStates;
 
   public DriveTrain() {
     kinematics = new SwerveDriveKinematics(
@@ -70,6 +71,19 @@ public abstract class DriveTrain extends SubsystemBase {
 
     orchestra = new Orchestra();
     orchestra.loadMusic("Music/output.chrp");
+
+    tempStates = new SwerveModuleState[]{
+        new SwerveModuleState(0, new Rotation2d(0)),
+        new SwerveModuleState(0, new Rotation2d(0)),
+        new SwerveModuleState(0, new Rotation2d(0)),
+        new SwerveModuleState(0, new Rotation2d(0)),
+    };
+    
+    // for(int i = 0; i < 4; i++){
+    //   tempStates[i].speedMetersPerSecond = 0;
+    //   tempStates[i].angle = new Rotation2d(0);
+    // };
+
 
     modules = new SwerveModule[4];
     modules[0] = initializeModule(Constants.Port.FRONT_LEFT_DRIVE_MOTOR, Constants.Port.FRONT_LEFT_STEER_MOTOR,
@@ -165,6 +179,9 @@ public abstract class DriveTrain extends SubsystemBase {
    * 
    * @param chassis_speeds The desired robot-relative chassis speeds.
    */
+  public void setAngle(){
+    setModules(tempStates);
+  }
 
   public void setSwerveDrive(ChassisSpeeds chassis_speeds) {
     // fix weird change over time shenanigans
@@ -203,7 +220,7 @@ public abstract class DriveTrain extends SubsystemBase {
 
   public void setModules(SwerveModuleState[] module_states) {
     for (int i = 0; i < modules.length; i++) {
-      modules[i].setState(module_states[i]);
+      modules[i].setState(module_states[i]); //utb moduleStates
     }
   }
 
