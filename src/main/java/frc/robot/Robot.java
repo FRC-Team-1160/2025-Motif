@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    // m_robot_container.updateSwerve();
+     m_robot_container.updateSwerve();
   }
 
   @Override

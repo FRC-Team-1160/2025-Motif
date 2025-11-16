@@ -33,7 +33,7 @@ public class RobotContainer {
 
   
 
-  private Joystick simp_stick = new Joystick(1);
+  private Joystick simp_stick = new Joystick(2); 
 
   public final DriveTrain m_drive = Robot.isReal() ? new DriveTrainRealIO() : new DriveTrainSimIO();
 
@@ -75,9 +75,9 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    // new JoystickButton(main_stick, 8).onTrue(
-    //   new InstantCommand(m_drive::resetGyroAngle)
-    // );
+    new JoystickButton(simp_stick, 8).onTrue(
+      new InstantCommand(m_drive::resetGyroAngle)
+    );
 
     new JoystickButton(simp_stick, 8).onTrue(
       new InstantCommand(m_drive::resetGyroAngle)

@@ -113,11 +113,11 @@ public final class Constants {
     public static final double TURN_SPEED = 0.5;
 
     public static class DriveMotorConfigs {
-      public static final double kP = 0.0; //0.1
+      public static final double kP = .1; //0.1
       public static final double kI = 0;
-      public static final double kD = 0;//0.1;
-      public static final double kS = 0;//0.13;
-      public static final double kV = 0;//0.7; 
+      public static final double kD = 0.1;//0.1;
+      public static final double kS = 0.13;//0.13;
+      public static final double kV = 0.7;//0.7; 
       public static final double kA = 0;
       public static final double kG = 0;
     }
