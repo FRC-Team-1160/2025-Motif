@@ -191,6 +191,7 @@ public abstract class DriveTrain extends SubsystemBase {
     for(int i = 0; i<4; i++){
       modules[i].setAngle(Rotation2d.fromDegrees(angle));
     }
+    SmartDashboard.putNumber("in_angle from func", modules[0].getAngle().getDegrees());
   }
 
   public void setSwerveDrive(ChassisSpeeds chassis_speeds) {

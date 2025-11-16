@@ -25,7 +25,7 @@ public abstract class SwerveModule {
   public void update() {
     if (!RobotState.isDisabled()) { //just in case, idk
       setSpeed(target_state.speedMetersPerSecond);
-      setAngle(target_state.angle);
+      //setAngle(target_state.angle);
     }
   }
 

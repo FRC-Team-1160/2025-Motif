@@ -88,7 +88,7 @@ public class RobotContainer {
     );
 
     new JoystickButton(simp_stick,2).onTrue(
-      new InstantCommand(() -> m_drive.setAngle(30))
+      new InstantCommand(() -> m_drive.setAngle(90))
     );
 
 

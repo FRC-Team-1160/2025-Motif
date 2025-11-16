@@ -123,9 +123,9 @@ public final class Constants {
     }
 
     public static class SteerMotorConfigs {
-      public static final double kP = 4;//0.5;
+      public static final double kP = 15;//0.5;
       public static final double kI = 0;
-      public static final double kD = 0;
+      public static final double kD = 0.75;
       public static final double kS = 0; //doesnt work?
       public static final double kV = 0;
       public static final double kA = 0;
