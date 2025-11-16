@@ -129,7 +129,7 @@ public class SwerveModuleRealIO extends SwerveModule{
     //if (steerPortVar == 3 || steerPortVar == 7) {
       var request = new PositionVoltage(0).withSlot(0);
       // var angleInDegrees = Degrees.of(80);
-      steer_motor.setControl(request.withPosition(0.25));
+      steer_motor.setControl(new PositionVoltage(angle.getRotations()));
     //}
     // steer_motor.setControl(0);
     // steer_motor.setControl(new PositionVoltage(0))

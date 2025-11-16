@@ -84,8 +84,13 @@ public class RobotContainer {
     );
 
     new JoystickButton(simp_stick,1).onTrue(
-      new RunCommand(m_drive::setAngle)
+      new InstantCommand(() -> m_drive.setAngle(0))
     );
+
+    new JoystickButton(simp_stick,2).onTrue(
+      new InstantCommand(() -> m_drive.setAngle(30))
+    );
+
 
     // new JoystickButton(main_stick, 7).toggleOnFalse(
     //   m_drive.musicCommand("test")

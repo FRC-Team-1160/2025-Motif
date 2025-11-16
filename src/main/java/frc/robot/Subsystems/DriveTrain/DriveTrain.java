@@ -73,16 +73,14 @@ public abstract class DriveTrain extends SubsystemBase {
     orchestra.loadMusic("Music/output.chrp");
 
     tempStates = new SwerveModuleState[]{
-        new SwerveModuleState(0, new Rotation2d(0)),
-        new SwerveModuleState(0, new Rotation2d(0)),
-        new SwerveModuleState(0, new Rotation2d(0)),
-        new SwerveModuleState(0, new Rotation2d(0)),
+        new SwerveModuleState(),
+        new SwerveModuleState(),
+        new SwerveModuleState(),
+        new SwerveModuleState(),
     };
     
-    // for(int i = 0; i < 4; i++){
-    //   tempStates[i].speedMetersPerSecond = 0;
-    //   tempStates[i].angle = new Rotation2d(0);
-    // };
+
+
 
 
     modules = new SwerveModule[4];
@@ -174,13 +172,25 @@ public abstract class DriveTrain extends SubsystemBase {
     setSwerveDrive(chassis_speeds);
   }
 
+  public void updTempStates(double newAngle){
+    for(int i = 0; i < 4; i++){
+      tempStates[i].speedMetersPerSecond = 0;
+      tempStates[i].angle = Rotation2d.fromDegrees(newAngle);
+    };
+  };
+
   /**
    * Calculates and sends inputs to swerve modules given robot-relative speeds.
    * 
    * @param chassis_speeds The desired robot-relative chassis speeds.
    */
-  public void setAngle(){
-    setModules(tempStates);
+  public void setAngle(double angle){
+    // updTempStates(angle);
+    SmartDashboard.putNumber("input angle", angle);
+    // setModules(tempStates);
+    for(int i = 0; i<4; i++){
+      modules[i].setAngle(Rotation2d.fromDegrees(angle));
+    }
   }
 
   public void setSwerveDrive(ChassisSpeeds chassis_speeds) {
