@@ -62,7 +62,7 @@ public class RobotContainer {
 
     double leftStickLeftRight = simp_stick.getRawAxis(0);
     double angle_radiansPerSecond =  (Math.abs(simp_stick.getRawAxis(0)) < 0.2) ? 0 : Math.signum(simp_stick.getRawAxis(0)) * 1.5
-    * Math.pow(simp_stick.getRawAxis(0), 2);
+    * Math.pow(simp_stick.getRa wAxis(0), 2);
     SmartDashboard.putNumber("axis_0", leftStickLeftRight);
     SmartDashboard.putNumber("angle", angle_radiansPerSecond);
 
