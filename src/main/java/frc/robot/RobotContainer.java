@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.auto.AutoBuilder;
+//import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -39,13 +39,15 @@ public class RobotContainer {
 
   // public final Climber m_climber = new Climber();
 
-  private final SendableChooser<Command> auto_chooser;
+  //private final SendableChooser<Command> auto_chooser;
 
+  /*
   public RobotContainer() {
     auto_chooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", auto_chooser);
     configureBindings();
   }
+    */
 
   public void updateSwerve() {
     double rightStickUpDown = simp_stick.getRawAxis(5);
@@ -62,7 +64,7 @@ public class RobotContainer {
 
     double leftStickLeftRight = simp_stick.getRawAxis(0);
     double angle_radiansPerSecond =  (Math.abs(simp_stick.getRawAxis(0)) < 0.2) ? 0 : Math.signum(simp_stick.getRawAxis(0)) * 1.5
-    * Math.pow(simp_stick.getRa wAxis(0), 2);
+    * Math.pow(simp_stick.getRawAxis(0), 2);
     SmartDashboard.putNumber("axis_0", leftStickLeftRight);
     SmartDashboard.putNumber("angle", angle_radiansPerSecond);
 

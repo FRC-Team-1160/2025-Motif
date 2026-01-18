@@ -19,22 +19,22 @@ public final class Constants {
 
   public static final class Port {
     // CAN IDs 
-    public static final int FRONT_LEFT_STEER_MOTOR = 1;
+    public static final int FRONT_LEFT_STEER_MOTOR = 7;
     public static final int FRONT_RIGHT_STEER_MOTOR = 3;
-    public static final int BACK_LEFT_STEER_MOTOR = 5;
-    public static final int BACK_RIGHT_STEER_MOTOR = 7;
+    public static final int BACK_LEFT_STEER_MOTOR = 1;
+    public static final int BACK_RIGHT_STEER_MOTOR = 5;
 
-    public static final int FRONT_LEFT_DRIVE_MOTOR = 2;
+    public static final int FRONT_LEFT_DRIVE_MOTOR = 8;
     public static final int FRONT_RIGHT_DRIVE_MOTOR = 4;
-    public static final int BACK_LEFT_DRIVE_MOTOR = 6;
-    public static final int BACK_RIGHT_DRIVE_MOTOR = 8;
+    public static final int BACK_LEFT_DRIVE_MOTOR = 2;
+    public static final int BACK_RIGHT_DRIVE_MOTOR = 6;
 
-    public static final int FRONT_LEFT_CODER = 1;
+    public static final int FRONT_LEFT_CODER = 7;
     public static final int FRONT_RIGHT_CODER = 3;
     // we swapped these in code, but we could do this in the tuner
     // we may need to recalibrate
-    public static final int BACK_LEFT_CODER = 5;
-    public static final int BACK_RIGHT_CODER = 7;
+    public static final int BACK_LEFT_CODER = 1;
+    public static final int BACK_RIGHT_CODER = 5;
 
     public static final int LEFT_ELEVATOR_MOTOR = 10;
     public static final int RIGHT_ELEVATOR_MOTOR = 11;
